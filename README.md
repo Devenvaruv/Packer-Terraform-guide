@@ -45,18 +45,25 @@ After successful deployment, you will be able to:
 Verify the Installation
 
 Run packer in your terminal. You should see a help message or usage instructions.
+![alt text](./assets/image-1.png)
 
 Run terraform in your terminal. You should see a help message or usage instructions.
+![alt text](./assets/image-2.png)
 
 3. **AWS Credentials**  
    You will need the following from your AWS account (often provided when you create or refresh AWS CLI credentials):
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
    - `AWS_SESSION_TOKEN` (if using temporary session credentials)
+   if you are on aws acedemy click on show to get them
+   ![alt text](./assets/image.png)
 
 4. **SSH Keys**
    - **Public key**: Will be baked into the AMI so you can SSH in.
    - **Private key**: Used to SSH into instances (keep this secure).
+   if you do not want to use old key you can generate new key running this command
+    ```
+    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 5. **Git**
    - Install Git to clone the repository.
@@ -93,6 +100,7 @@ Navigate to the Packer directory:
 Build the AMI with your public key:
 
 copy your public key value and paste it below
+![alt text](./assets/image-3.png)
 
 Windows (PowerShell) example:
 
@@ -104,12 +112,19 @@ Mac / Linux example:
 
 Note: -var flag expected the actual value of the key not the path of the key.
 
+if you get any error related to amazon-ebs run this command and then run the original again
+
+    packer plugins install github.com/hashicorp/amazon
+
 Wait for the build to complete (approximately 3–4 minutes).
 
+Start of build
+![alt text](./assets/image-4.png)
+
 Upon success, Packer will output the AMI ID.
-
+![alt text](./assets/image-5.png)
 The same AMI ID will also appear in manifest.json.
-
+![alt text](./assets/image-6.png)
 Copy the newly created AMI ID.
 
 ### Provisioning Infrastructure (Terraform)
@@ -122,42 +137,66 @@ Update terraform.tfvars with your newly created AMI ID:
 
     custom_ami_id = "ami-XXXXXXXXXXXXX"
 Replace "ami-XXXXXXXXXXXXX" with the actual AMI ID from your Packer build.
+![alt text](./assets/image-7.png)
 
 ### Initialize, Plan, and Apply with Terraform:
 
     terraform init
     terraform plan
     terraform apply
-
+![alt text](./assets/image-8.png)
 When prompted, type yes to confirm.
-
+![alt text](./assets/image-9.png)
 Upon successful completion, Terraform will output:
 
 The Public IP address of the bastion host.
 
 The Private IP addresses (or private DNS) of the six EC2 instances.
-
+![alt text](./assets/image-10.png)
 ### Connecting to Your Instances
 
 Add Your Private Key to SSH Agent (if needed):
 
     ssh-add -l
+
 If no key is listed, add it:
 
     ssh-add /path/to/your_private_key
 SSH into the Bastion Host:
 
     ssh -A -i "/path/to/your_private_key" ec2-user@YOUR_BASTION_PUBLIC_IP
+![alt text](./assets/image-12.png)
 -A forwards your SSH agent, allowing you to SSH into the private instances without copying the private key onto the bastion.
 
 From the Bastion Host, SSH into a Private EC2 Instance:
 
-    ssh ec2-user@PRIVATE_EC2_IP_OR_DNS
+    ssh ec2-user@PRIVATE_EC2_IP
+![alt text](./assets/image-13.png)
 You are now inside one of your private EC2 instances.
 
-Expected Outputs
-Bastion Host Public IP: Displayed after Terraform completes.
+Docker TEST:
+![alt text](./assets/image-14.png)
 
-Private EC2 IPs (6 total): Displayed after Terraform completes.
+additional info you will see on AWS
 
-Custom AMI: Built by Packer; displayed during the packer build, and also in manifest.json.
+![alt text](./assets/image-15.png)
+
+Bastion host only have public ip rest of them having private ip.
+
+Bastion ec2 details
+![alt text](./assets/image-16.png)
+![alt text](./assets/image-17.png)
+
+only allowing on port 22 from host.
+![alt text](./assets/image-25.png)
+private ec2
+![alt text](./assets/image-18.png)
+![alt text](./assets/image-20.png)
+only allow inbound from the bastion
+![alt text](./assets/image-21.png)
+
+Elastic ip
+![alt text](./assets/image-22.png)
+
+VPC
+![alt text](./assets/image-24.png)

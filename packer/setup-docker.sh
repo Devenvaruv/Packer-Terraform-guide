@@ -1,4 +1,3 @@
-echo "DEBUG: SSH_PUBLIC_KEY = ${SSH_PUBLIC_KEY}"
 echo "Installing Docker ..."
 sudo yum install -y docker
 sudo systemctl start docker
