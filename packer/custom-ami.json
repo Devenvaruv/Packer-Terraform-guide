@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "ssh_public_key": ""
+  },
   "builders": [
     {
       "type": "amazon-ebs",
@@ -12,7 +15,16 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "setup-docker.sh"
+      "script": "setup-docker.sh",
+      "environment_vars": [
+        "SSH_PUBLIC_KEY={{user `ssh_public_key`}}"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json"
     }
   ]
 }
