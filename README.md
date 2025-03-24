@@ -51,17 +51,18 @@ Run terraform in your terminal. You should see a help message or usage instructi
 ![alt text](./assets/image-2.png)
 
 3. **AWS Credentials**  
-   You will need the following from your AWS account (often provided when you create or refresh AWS CLI credentials):
+   You will need the following from your AWS account:
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
-   - `AWS_SESSION_TOKEN` (if using temporary session credentials)
-   if you are on aws acedemy click on show to get them
+   - `AWS_SESSION_TOKEN`
+   - 
+   if you are on AWS Academy click on Show to get them
    ![alt text](./assets/image.png)
 
 4. **SSH Keys**
    - **Public key**: Will be baked into the AMI so you can SSH in.
    - **Private key**: Used to SSH into instances (keep this secure).
-   if you do not want to use old key you can generate new key running this command
+   if you do not want to use the old key you can generate a new key by running this command
     ```
     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
