@@ -5,7 +5,7 @@ variable "region" {
 }
 
 variable "network_name" {
-  description = "Name of the VPC (was vpc_name)"
+  description = "Name of the VPC"
   type        = string
   default     = "my-vpc"
 }
@@ -44,9 +44,16 @@ data "http" "allowed_admin_ip" {
   url = "https://api.ipify.org?format=text"
 }
 
-variable "custom_ami_id" {
-  description = "The custom AMI ID created using Packer"
+variable "ubuntu_ami_id" {
+  description = "AMI ID for Ubuntu instances"
   type        = string
+  default     = "ami-084568db4383264d4"
+}
+
+variable "amz_linux_ami_id" {
+  description = "AMI ID for Amazon Linux instances"
+  type        = string
+  default     = "ami-071226ecf16aa7d96"
 }
 
 variable "admin_host_instance_type" {
@@ -62,7 +69,7 @@ variable "internal_host_instance_type" {
 }
 
 variable "num_internal_hosts" {
-  description = "Number of private EC2 instances (was num_private_instances)"
+  description = "Number of private EC2 instances"
   type        = number
   default     = 6
 }

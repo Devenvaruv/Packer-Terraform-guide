@@ -76,11 +76,12 @@ resource "aws_security_group" "internal_sg" {
 #  EC2 Instances
 ############################################
 resource "aws_instance" "admin_host" {
-  ami                         = var.custom_ami_id
+  ami                         = var.amz_linux_ami_id
   instance_type               = var.admin_host_instance_type
   subnet_id                   = module.network_infra.public_subnets[0]
   vpc_security_group_ids      = [aws_security_group.admin_sg.id]
   associate_public_ip_address = true
+  key_name                    = "vockey"
 
   tags = {
     Name = "Admin Host"
@@ -89,12 +90,14 @@ resource "aws_instance" "admin_host" {
 
 resource "aws_instance" "internal_hosts" {
   count                  = var.num_internal_hosts
-  ami                    = var.custom_ami_id
+  ami                    = count.index < 3 ? var.ubuntu_ami_id : var.amz_linux_ami_id
   instance_type          = var.internal_host_instance_type
   subnet_id              = element(module.network_infra.private_subnets, count.index)
   vpc_security_group_ids = [aws_security_group.internal_sg.id]
+  key_name               = "vockey"
 
   tags = {
     Name = "Internal Host ${count.index + 1}"
+    OS   = count.index < 3 ? "ubuntu" : "amazon"
   }
 }
