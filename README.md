@@ -24,6 +24,7 @@ From that controller, run the Ansible playbook to manage the other 6 EC2 instanc
 Verify the Installation
 
 Run terraform in your terminal. You should see a help message or usage instructions.
+
 ![alt text](./assets/image-30.png)
 
 2. **AWS Credentials**  
@@ -33,6 +34,7 @@ Run terraform in your terminal. You should see a help message or usage instructi
    - `AWS_REGION="us-east-1"`
    - `AWS_SESSION_TOKEN` (if using temporary session credentials)
    if you are on aws acedemy click on show to get them
+
    ![alt text](./assets/image.png)
 
 3. **lab key**
@@ -79,15 +81,21 @@ Navigate back to the main folder, then into the Terraform directory:
     terraform init
     terraform plan
     terraform apply
+
 ![alt text](./assets/image-80.png)
+
 When prompted, type yes to confirm.
+
 ![alt text](./assets/image-90.png)
+
 Upon successful completion, Terraform will output:
 
 The Public IP address of the controller host.
 
 The Private IP addresses of the six EC2 instances.
+
 ![alt text](./assets/image-1.png)
+
 ### Connecting to Your Instances
 
 Move your labsuser.pem key to the project home directory
@@ -115,6 +123,7 @@ all of those files inside /ansible should be copied into the ec2.
 SSH into the Controller Host:
 
     ssh -A -i labsuser.pem ec2-user@YOUR_BASTION_PUBLIC_IP
+
 ![alt text](./assets/image-3.png)
 
 run
@@ -132,6 +141,7 @@ make the install_ansible.sh executable and run it
     chmod +x install_ansible.sh
 
 if you get this error due to the file being created on a windows device
+
 ![alt text](./assets/image-5.png)
 
 install dos2unix library and run it
