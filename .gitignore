@@ -5,3 +5,4 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 packer/manifest.json
 packer/manifest.json.lock
+labsuser.pem

@@ -1,0 +1,18 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+
+hostnames:
+  - private-dns-name
+
+keyed_groups:
+  - key: tags.OS
+    prefix: "_"
+    separator: ""
+
+filters:
+  instance-state-name: running
+  "tag:Name": "Internal Host*"
+  
+compose:
+  ansible_ssh_user: "{{ 'ubuntu' if tags.OS == 'ubuntu' else 'ec2-user' }}"
